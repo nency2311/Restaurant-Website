@@ -8,8 +8,9 @@ export default function Blog() {
   useEffect(() => {
     fetch("https://www.themealdb.com/api/json/v1/1/search.php?f=b")
       .then((res) => res.json())
-      .then((data) => setMeals(data.meals));
+      .then((data) => setMeals(data.meals  || [] ));
   }, []);
+  if (!meals.length) return <p style={{textAlign:'center', marginTop:'100px'}}>Loading...</p>;
   return (
     <>
       <PageBanner title="Blog"/>
@@ -39,8 +40,8 @@ export default function Blog() {
 
       </div>
       {selectedMeal && (
-  <div className="popup">
-    <div className="popup-card">
+  <div className="popup" onClick={() => setSelectedMeal(null)}>
+    <div className="popup-card" onClick={(e) => e.stopPropagation()}>
 
       <button 
         className="close-btn"

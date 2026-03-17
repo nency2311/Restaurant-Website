@@ -92,26 +92,38 @@ export default function Home() {
   speed: 500,
   slidesToShow: 4,
   slidesToScroll: 1,
-  arrows: true,
-  autoplay: true,
-  autoplaySpeed: 2000,
-  pauseOnHover: true
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: { slidesToShow: 3 }
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 2,
+        arrows: false,   // hide arrows on tablet
+        dots: true       // show dots instead
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        arrows: false,
+        dots: true
+      }
+    }
+  ]
 };
 
   return (
     <>
     {/* ----------------------section one------------------------ */}
-      <section className='hero-section' style={{
-    background: `
-      url(${wall}) right center no-repeat,
-      linear-gradient(90deg, #eef3e3 64%, #7fbf3f 64%)
-    `,
-    backgroundSize: "contain, 100%"
-  }}>
+      <section className='hero-section'>
         <div className='container'>
             <div className='row align-items-center'>
                  {/* LEFT SIDE */}
-                <div className='col-lg-6 hero-left'>
+                <div className='col-md-6 hero-left'>
                     <p className='sub-title'>High Quality Test Station</p>
 
                     <h1>
@@ -130,7 +142,7 @@ export default function Home() {
                     </div>
                 </div>
                 {/* right SIDE */}
-                <div className='col-lg-6 hero-right'>
+                <div className='col-md-6 hero-right'>
                     <img src={heroImg} alt="food" className='heroimg'/>
                     
                 </div>
@@ -147,7 +159,7 @@ export default function Home() {
           <h1 className='sec-title'>Our Popular Food</h1>
           <div className='row'>
 
-            <div className='col-lg-3 col-md-6 mb-4'>
+            <div className='col-6 col-lg-3 col-md-6 mb-4'>
               <div className='food-card'>
                 <img src={pizza} alt='pizza'/>
                 <h4>Pizza</h4>
@@ -157,7 +169,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='col-lg-3 col-md-6 mb-4'>
+            <div className=' col-6 col-lg-3 col-md-6 mb-4'>
               <div className='food-card'>
                 <img src={rice} alt='rice'/>
                 <h4>Rice</h4>
@@ -167,7 +179,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='col-lg-3 col-md-6 mb-4'>
+            <div className='col-6 col-lg-3 col-md-6 mb-4'>
               <div className='food-card'>
                 <img src={salad} alt='salad'/>
                 <h4>Green Salad</h4>
@@ -177,7 +189,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='col-lg-3 col-md-6 mb-4'>
+            <div className='col-6 col-lg-3 col-md-6 mb-4'>
               <div className='food-card'>
                 <img src={pasta} alt='pasta'/>
                 <h4>Pasta</h4>
@@ -198,7 +210,7 @@ export default function Home() {
         <div className='container'>
           <h1 className='third-title'>Today's Menu</h1>
           <div className='row'>
-            <div className='col-lg-3 col-md-6 mb-4'>
+            <div className=' col-6 col-lg-3 col-md-6 mb-4'>
               <div className='third-card1 '>
                 <span className="top-seller">Top Seller</span>
                 <div className="hover-content">
@@ -209,7 +221,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='col-lg-3 col-md-6 mb-4'>
+            <div className=' col-6 col-lg-3 col-md-6 mb-4'>
               <div className='third-card2 '>
               <span className="top-seller">Top Seller</span>
               <div className='hover-content'>
@@ -220,7 +232,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='col-lg-3 col-md-6 mb-4'>
+            <div className='col-6 col-lg-3 col-md-6 mb-4'>
               <div className='third-card3 '>
               <span className="top-seller">Top Seller</span>
               <div className='hover-content'>
@@ -231,7 +243,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='col-lg-3 col-md-6 mb-4'>
+            <div className='col-6 col-lg-3 col-md-6 mb-4'>
               <div className='third-card4 '>
               <span className="top-seller">Top Seller</span>
               <div className='hover-content'>
@@ -343,7 +355,7 @@ export default function Home() {
           </Slider> 
           </div>
         </div>
-      </section>
+        </section>
 
       {/* ----------------------section five------------------------ */}
       <section className='five-section' style={{ backgroundImage: `url(${bgImg})` }}> 

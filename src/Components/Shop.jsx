@@ -11,6 +11,7 @@ export default function Shop() {
   const [time,setTime] = useState("");
   const [editId,setEditId] =useState(null);
   const [isEdit,setIsEdit] = useState(false);
+  const idRef = React.useRef(data.length + 1);
 // -----------------------------------get the data from cosdata and put into the table-----------------
   useEffect(() => {
    setData(Costemdatajason);
@@ -18,8 +19,20 @@ export default function Shop() {
 
   // -----------------------------------Add Button------add the new/edit data when you click the add button------------
   const handleAdd = () => {
+    if (!name || !number || !date || !time) {
+    alert("Please fill in all fields.");
+    return;
+  }
+  if (!/^\d{10}$/.test(number)) {
+    alert("Enter a valid 10-digit phone number.");
+    return;
+  }
+  // ... rest of add logic
+  setIsEdit(false);   // Bug 4 fix
+  setEditId(null);
+  
     const newReservation = {
-      id: data.length + 1,
+      id: idRef.current++,
       firstName: name,
       phoneNum: number,
       guestNo: guest,
@@ -73,11 +86,9 @@ export default function Shop() {
 };
 // -----------------------------------clear Button------------------
 const handleClear = () => {
-  setName("");
-  setNumber("");
-  setGuest(1);
-  setDate("");
-  setTime("");
+   setName(""); setNumber(""); setGuest(1); setDate(""); setTime("");
+  setIsEdit(false);   // cancel edit mode too
+  setEditId(null);
 };
 
   return (
@@ -90,7 +101,12 @@ const handleClear = () => {
           <input type='text' placeholder='Enter The Name' value={name} onChange={(e) => setName(e.target.value)}/>
           <input type='text' placeholder='Enter The Mobile Number' value={number} onChange={(e) => setNumber(e.target.value)}/>
           <input type='number' placeholder='guest' value={guest} onChange={(e) => setGuest(e.target.value)}/>
-          <input type='date' value={date} onChange={(e) => setDate(e.target.value)}/>
+         <input
+  type='date'
+  value={date}
+  min={new Date().toISOString().split('T')[0]}
+  onChange={(e) => setDate(e.target.value)}
+/>
           <input type='time' value={time} onChange={(e) => setTime(e.target.value)}/>
           <div>
           {isEdit ? (
@@ -101,6 +117,7 @@ const handleClear = () => {
           <button className='b1' onClick={handleClear}>clear</button>
           </div>
         </div>
+        <div style={{ overflowX: 'auto' }}>
         <table className="table table-striped table-bordered table-hover mt-4">
           <thead className="table-success">
           <tr>
@@ -114,25 +131,25 @@ const handleClear = () => {
           </tr>
         </thead>
 
-        <tbody>
-          {data.map((item,index) => (
-            <tr key={index}>
-              <td>{item.id}</td>
-              <td>{item.firstName}</td>
-              <td>{item.phoneNum}</td>
-              <td>{item.guestNo}</td>
-              <td>{item.date}</td>
-              <td>{item.timing}</td>
-              <td>
-                <button className="btn btn-success btn-sm me-2" onClick={() => handleEdit(item)}>Edit</button>
-                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(item.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-
-        </tbody>
+       <tbody>
+  {data.map((item) => (
+    <tr key={item.id}>
+      <td>{item.id}</td>
+      <td>{item.firstName}</td>
+      <td>{item.phoneNum}</td>
+      <td>{item.guestNo}</td>
+      <td>{item.date}</td>
+      <td>{item.timing}</td>
+      <td>
+        <button className="btn btn-success btn-sm me-2" onClick={() => handleEdit(item)}>Edit</button>
+        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(item.id)}>Delete</button>
+      </td>
+    </tr>
+  ))}
+</tbody>
 
         </table>
+        </div>
 
       </div>
     </>
